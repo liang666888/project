@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: configServer
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/liang666888/spring-cloud-config.git #配置git仓库地址
+          #配置仓库路径
+          search-paths:
+          - demo
+          - demo2
+          #访问git仓库的用户名与密码
+          #username: 
+          #password: 
+      label: master #配置仓库的分支
+#服务端口号
+server:
+  port: 8888
+  servlet:
+    context-path: /configServer
+#服务注册中心地址
+eureka:
+  instance:
+    metadata-map:
+      #配置中心设置了context-path后需加上此配置，
+      #否则客户端无法通过eureka获取配置（坑了好久呃）
+      configPath: ${server.servlet.context-path}
+  client:
+    service-url: 
+      defaultZone: http://127.0.0.1:8761/eureka/

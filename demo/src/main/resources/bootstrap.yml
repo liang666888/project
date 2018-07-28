@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: demo
+  profiles:
+    active:
+    - prod
+  cloud:
+    config:
+      label: master
+      #uri:  #配置服务中心的地址（改为从注册中心获取）
+      #- http://127.0.0.1:8888/configServer
+      discovery: 
+        enabled: true
+        service-id: configServer
+server:
+  port: 8080
+  servlet:
+    context-path: /demo
+eureka:
+  client:
+    service-url: 
+      defaultZone: http://127.0.0.1:8761/eureka/

@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: demo2
+  profiles:
+    active:
+    - prod
+  cloud:
+    config:
+      label: master
+      uri:  #配置服务中心的地址
+      - http://127.0.0.1:8888/configServer
+  
+server:
+  port: 8090
+  servlet:
+    context-path: /demo2
