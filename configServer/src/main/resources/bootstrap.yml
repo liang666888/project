@@ -14,6 +14,23 @@ spring:
           #username: 
           #password: 
       label: master #配置仓库的分支
+  #amqp配置
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+management:
+  endpoints:
+    web:
+      exposure:   #暴露，公开
+        include: 
+        - bus-refresh
+      cors:
+        allowed-origins:
+        - "*"
+        allowed-methods:
+        - "*"
 #服务端口号
 server:
   port: 8888
