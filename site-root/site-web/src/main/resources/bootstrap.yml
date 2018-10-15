@@ -1,0 +1,12 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /siteweb
+spring: 
+  application:
+    name: site-web
+
+eureka: 
+  client:
+    service-url: 
+      defaultZone: http://127.0.0.1:8761/eureka/
