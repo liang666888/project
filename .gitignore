@@ -2,3 +2,7 @@
 *.settings
 *.project
 target/
+*.apt_generated
+*.factorypath
+*.springBeans
+*.class
