@@ -15,8 +15,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since JDK 1.8
  */
 @SpringBootApplication
-public class Application {
+public class SiteServiceApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(SiteServiceApplication.class, args);
 	}
 }

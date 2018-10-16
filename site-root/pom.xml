@@ -26,7 +26,6 @@
   <modules>
   	<module>site-service-api</module>
     <module>site-service</module>
-    <module>site-service-starter</module>
     <module>site-web</module>
     <module>site-cache</module>
   </modules>
