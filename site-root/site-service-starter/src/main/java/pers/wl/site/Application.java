@@ -5,7 +5,6 @@ package pers.wl.site;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /** 
  * 描述说明
@@ -15,7 +14,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  * @Date 2018年10月12日 上午11:36:15
  * @since JDK 1.8
  */
-@EnableEurekaClient
 @SpringBootApplication
 public class Application {
 	public static void main(String[] args) {

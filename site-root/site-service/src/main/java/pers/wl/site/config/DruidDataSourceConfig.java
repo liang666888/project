@@ -1,7 +1,7 @@
 /**
  * Copyright © 2017-2018 WL.All Rights Reserved.
  */
-package pers.wl.site.service.config;
+package pers.wl.site.config;
 
 import javax.sql.DataSource;
 
