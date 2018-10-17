@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
+import com.spring4all.swagger.EnableSwagger2Doc;
+
 /** 
  * 描述说明
  * 初始化启动类
@@ -15,7 +17,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Date 2018年10月12日 上午11:24:17
  * @since JDK 1.8
  */
-//@EnableSwagger2Doc
+@EnableSwagger2Doc
 @EnableFeignClients
 @SpringBootApplication
 public class Application {

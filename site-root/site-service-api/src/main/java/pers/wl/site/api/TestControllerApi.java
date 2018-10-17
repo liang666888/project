@@ -6,6 +6,8 @@ package pers.wl.site.api;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import pers.wl.site.model.UserModel;
 
 /**
@@ -16,12 +18,15 @@ import pers.wl.site.model.UserModel;
  * @Date 2018年10月16日 上午10:55:56
  * @since JDK 1.8
  */
-@RequestMapping("test-service-rpc")
-public interface TestServiceRpc {
+@Api(tags="测试api")
+@RequestMapping("/test-api")
+public interface TestControllerApi {
 	
-	@GetMapping("/sayhi")
-	public UserModel sayHi();
+	@ApiOperation(value="获取用户",notes="描述:")
+	@GetMapping("/test/getuser")
+	public UserModel getUser();
 	
-	@GetMapping("/sayHello")
+	@ApiOperation(value="sayHello",notes="描述:")
+	@GetMapping("/test/sayHello")
 	public String sayHello();
 }

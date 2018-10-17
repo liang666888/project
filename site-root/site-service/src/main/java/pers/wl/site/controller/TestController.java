@@ -1,11 +1,11 @@
 /**
  * Copyright © 2017-2018 WL.All Rights Reserved.
  */
-package pers.wl.site.api.impl;
+package pers.wl.site.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import pers.wl.site.api.TestServiceRpc;
+import pers.wl.site.api.TestControllerApi;
 import pers.wl.site.model.UserModel;
 
 /** 
@@ -17,25 +17,19 @@ import pers.wl.site.model.UserModel;
  * @since JDK 1.8
  */
 @RestController
-public class TestServiceRpcImpl implements TestServiceRpc{
-
-	/** 
-	 * @see pers.wl.site.api.TestServiceRpc#sayHi()
-	 */
+public class TestController implements TestControllerApi{
+	
 	@Override
-	public UserModel sayHi() {
+	public UserModel getUser() {
 		UserModel userModel = new UserModel();
 		userModel.setName("小亮");
-		userModel.setAge("18");
+		userModel.setAge(18);
 		return userModel;
 	}
-
-	/** 
-	 * @see pers.wl.site.api.TestServiceRpc#sayHello()
-	 */
+	
 	@Override
 	public String sayHello() {
-		return "hello";
+		return "hello!";
 	}
 	
 	

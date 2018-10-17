@@ -6,6 +6,8 @@ package pers.wl.site;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.spring4all.swagger.EnableSwagger2Doc;
+
 /** 
  * 描述说明
  * 初始化启动类
@@ -14,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Date 2018年10月12日 上午11:36:15
  * @since JDK 1.8
  */
+@EnableSwagger2Doc
 @SpringBootApplication
 public class SiteServiceApplication {
 	public static void main(String[] args) {

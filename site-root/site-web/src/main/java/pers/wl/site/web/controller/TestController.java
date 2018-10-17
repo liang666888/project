@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import pers.wl.site.model.UserModel;
-import pers.wl.site.web.client.DemoClient;
-import pers.wl.site.web.client.TestServiceClient;
+import pers.wl.site.web.client.TestControllerClient;
 
 /**
  * 描述说明
@@ -25,16 +24,11 @@ import pers.wl.site.web.client.TestServiceClient;
 public class TestController {
 
 	@Autowired
-	TestServiceClient testServiceClient;
-	
-	@Autowired
-	DemoClient demoClient;
+	TestControllerClient testServiceClient;
 
 	@GetMapping("/sayhi")
-	public UserModel sayHi() {
-		UserModel userModel = demoClient.getUser();
-		System.out.println(userModel.getName());
-		System.out.println(testServiceClient.sayHello());
-		return userModel;
+	public String sayHi() {
+		UserModel userModel = testServiceClient.getUser();
+		return testServiceClient.sayHello() + userModel.getName();
 	}
 }

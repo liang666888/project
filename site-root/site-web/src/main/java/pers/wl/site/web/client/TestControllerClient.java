@@ -5,7 +5,7 @@ package pers.wl.site.web.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 
-import pers.wl.site.api.TestServiceRpc;
+import pers.wl.site.api.TestControllerApi;
 
 /** 
  * 描述说明
@@ -17,6 +17,6 @@ import pers.wl.site.api.TestServiceRpc;
  * @since JDK 1.8
  */
 @FeignClient(value="site-service",path="site-service")
-public interface TestServiceClient extends TestServiceRpc{
+public interface TestControllerClient extends TestControllerApi{
 
 }
