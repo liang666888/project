@@ -28,6 +28,7 @@
     <module>site-service</module>
     <module>site-web</module>
     <module>site-cache</module>
+    <module>album-service</module>
   </modules>
   
   <dependencyManagement>
