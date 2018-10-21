@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
 
+import pers.wl.cache.redis.RedisUtils;
 import pers.wl.site.model.album.GoodsInfoModel;
 
 /**
@@ -27,11 +28,16 @@ public class GoodsInfoServiceTest {
 	@Autowired
 	private GoodsInfoService goodsInfoService;
 	
+	@Autowired
+	private RedisUtils redisUtils;
+	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void getAllTest(){
 		List<GoodsInfoModel> list = goodsInfoService.getAll();
 		Assert.assertNotNull(list);
-		System.out.println(JSON.toJSONString(list));
+		List<GoodsInfoModel> list2 = (List<GoodsInfoModel>)redisUtils.getObjectCache("getAllGoodsInfo");
+		System.out.println(JSON.toJSONString(list2));
 	}
 	
 	

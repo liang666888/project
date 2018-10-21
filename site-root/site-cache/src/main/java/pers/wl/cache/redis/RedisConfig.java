@@ -8,7 +8,8 @@ import java.time.Duration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +24,6 @@ import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * 描述说明 
@@ -37,16 +37,13 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 @Configuration
 @EnableCaching
-public class RedisConfig {
+public class RedisConfig extends CachingConfigurerSupport{
 	
 	
 	private final static Logger logger = LoggerFactory.getLogger(RedisConfig.class);
 	
-	/**
-	 * Redis的根操作路径
-	 */
-	@Value("${redis.root:site}")
-	private String category;
+	@Autowired
+	private MyRedisKeySerializer myRedisKeySerializer;
 	
 	private Duration timeToLive = Duration.ZERO;
     public void setTimeToLive(Duration timeToLive) {
@@ -95,10 +92,10 @@ public class RedisConfig {
     @SuppressWarnings("all")
     public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
     	// fastjson序列化
-		FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer(Object.class);
+		FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
                 .entryTtl(this.timeToLive)
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(myRedisKeySerializer))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(fastJsonRedisSerializer))
                 .disableCachingNullValues();
  
@@ -106,7 +103,6 @@ public class RedisConfig {
                 .cacheDefaults(config)
                 .transactionAware()
                 .build();
- 
         logger.info("自定义RedisCacheManager加载完成");
         return redisCacheManager;
     }
@@ -128,13 +124,13 @@ public class RedisConfig {
 	public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
 		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
 		// fastjson序列化
-		FastJsonRedisSerializer fastJsonRedisSerializer = new FastJsonRedisSerializer(Object.class);
+		FastJsonRedisSerializer<Object> fastJsonRedisSerializer = new FastJsonRedisSerializer<>(Object.class);
 		// value值的序列化采用fastJsonRedisSerializer
 		redisTemplate.setValueSerializer(fastJsonRedisSerializer);
 		redisTemplate.setHashValueSerializer(fastJsonRedisSerializer);
-		// key的序列化采用StringRedisSerializer
-		redisTemplate.setKeySerializer(new StringRedisSerializer());
-		redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+		// key的序列化采用MyRedisKeySerializer
+		redisTemplate.setKeySerializer(myRedisKeySerializer);
+		redisTemplate.setHashKeySerializer(myRedisKeySerializer);
 		redisTemplate.setConnectionFactory(redisConnectionFactory);
 		redisTemplate.afterPropertiesSet();
 		logger.info("自定义RedisTemplate加载完成");

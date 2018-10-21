@@ -56,9 +56,9 @@ public class RedisUtils {
 	public final static long NOT_EXPIRE = -1;
 
 	/**
-	 * Redis的根操作路径
+	 * Redis的根操作路径,以服务名作为key前缀
 	 */
-	@Value("${redis.root:site}")
+	@Value("${spring.application.name:site}")
 	private String category;
 
 	public RedisUtils setCategory(String category) {
@@ -85,7 +85,7 @@ public class RedisUtils {
 	 * @return
 	 */
 	public boolean existsKey(String key) {
-		return redisTemplate.hasKey(getFullKey(key));
+		return redisTemplate.hasKey(key);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class RedisUtils {
 	 * @return
 	 */
 	public DataType typeKey(String key) {
-		return redisTemplate.type(getFullKey(key));
+		return redisTemplate.type(key);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class RedisUtils {
 	 * @param newKey
 	 */
 	public void renameKey(String oldKey, String newKey) {
-		redisTemplate.rename(getFullKey(oldKey), getFullKey(newKey));
+		redisTemplate.rename(oldKey, newKey);
 	}
 
 	/**
@@ -119,7 +119,7 @@ public class RedisUtils {
 	 * @return
 	 */
 	public boolean renameKeyNx(String oldKey, String newKey) {
-		return redisTemplate.renameIfAbsent(getFullKey(oldKey), getFullKey(newKey));
+		return redisTemplate.renameIfAbsent(oldKey,newKey);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class RedisUtils {
 	 * @param key
 	 */
 	public void deleteKey(String key) {
-		redisTemplate.delete(getFullKey(key));
+		redisTemplate.delete(key);
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class RedisUtils {
 	 * @param keys
 	 */
 	public void deleteKeys(String... keys) {
-		Set<String> ks = Stream.of(keys).map(k -> getFullKey(k)).collect(Collectors.toSet());
+		Set<String> ks = Stream.of(keys).map(k -> k).collect(Collectors.toSet());
 		redisTemplate.delete(ks);
 	}
 
@@ -150,7 +150,7 @@ public class RedisUtils {
 	 * @param keys
 	 */
 	public void deleteKeys(Collection<String> keys) {
-		Set<String> ks = keys.stream().map(k -> getFullKey(k)).collect(Collectors.toSet());
+		Set<String> ks = keys.stream().map(k -> k).collect(Collectors.toSet());
 		redisTemplate.delete(ks);
 	}
 
@@ -165,7 +165,7 @@ public class RedisUtils {
 	 *            时间单位
 	 */
 	public void expireKey(String key, long time, TimeUnit timeUnit) {
-		redisTemplate.expire(getFullKey(key), time, timeUnit);
+		redisTemplate.expire(key, time, timeUnit);
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class RedisUtils {
 	 *            指定日期
 	 */
 	public void expireKeyAt(String key, Date date) {
-		redisTemplate.expireAt(getFullKey(key), date);
+		redisTemplate.expireAt(key, date);
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class RedisUtils {
 	 * @return 指定时间单位的时间数
 	 */
 	public long getKeyExpire(String key, TimeUnit timeUnit) {
-		return redisTemplate.getExpire(getFullKey(key), timeUnit);
+		return redisTemplate.getExpire(key, timeUnit);
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class RedisUtils {
 	 * @param key
 	 */
 	public void persistKey(String key) {
-		redisTemplate.persist(getFullKey(key));
+		redisTemplate.persist(key);
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class RedisUtils {
 	 * @return
 	 */
 	public Object getObjectCache(String key) {
-		Object value = valueOperator.get(getFullKey(key));
+		Object value = valueOperator.get(key);
 		return value;
 	}
 
@@ -222,7 +222,7 @@ public class RedisUtils {
 	 * @return
 	 */
 	public <T> T getObjectCache(String key, Class<T> clazz) {
-		Object value = valueOperator.get(getFullKey(key));
+		Object value = valueOperator.get(key);
 		return JSON.parseObject(JSON.toJSONString(value), clazz);
 	}
 	
@@ -233,7 +233,7 @@ public class RedisUtils {
 	 * @param obj
 	 */
 	public void putObjectCache(String key,Object obj) {
-		valueOperator.set(getFullKey(key), obj);
+		valueOperator.set(key, obj);
 	}
 	
 	/**
