@@ -1,7 +1,10 @@
 /**
  * Copyright © 2017-2018 WL.All Rights Reserved.
  */
-package pers.wl.site;
+package pers.wl.album;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import pers.wl.cache.redis.RedisUtils;
+import pers.wl.site.model.album.GoodsInfoModel;
 
 /** 
  * 描述说明
@@ -31,6 +35,15 @@ public class RedisUtilsTest {
 		redisUtils.putObjectCache("test", "测试测试");
 		redisUtils.putObjectCache("test1", "测试测试1");
 		redisUtils.putObjectCache("test2", "测试测试2");
+		GoodsInfoModel model = new GoodsInfoModel();
+		model.setGoodsId(1);
+		model.setGoodsName("测试什么鬼产品");
+		model.setCreateTime(new Date());
+		model.setGoodsSn("12133");
+		model.setGoodsHeadImg("adaffsdf.jpg");
+		model.setGoodsPrice(new BigDecimal("23"));
+		model.setGoodsStatus("INIT");
+		redisUtils.putObjectCache("test3", model);
 		System.out.println(redisUtils.getObjectCache("test").toString());
 	}
 	

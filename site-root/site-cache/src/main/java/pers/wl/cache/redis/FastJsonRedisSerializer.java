@@ -1,7 +1,7 @@
 /**
  * Copyright © 2017-2018 WL.All Rights Reserved.
  */
-package pers.wl.site.cache.redis;
+package pers.wl.cache.redis;
 
 import java.nio.charset.Charset;
 

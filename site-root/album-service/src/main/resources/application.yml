@@ -7,9 +7,9 @@ spring:
   application:
     name: album-service
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
-    username: root
-    password: 
+    url: jdbc:mysql://116.62.117.180:28741/yinhua?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
+    username: Test0720
+    password: Test-*123@163.com
     driver-class-name: com.mysql.jdbc.Driver
     
     platform: mysql
@@ -46,9 +46,9 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
   redis:
-    host: 127.0.0.1
+    host: 116.62.117.180
     port: 6379
-    password: wl123
+    password: testdb
     database: 0
     jedis:
       pool:
