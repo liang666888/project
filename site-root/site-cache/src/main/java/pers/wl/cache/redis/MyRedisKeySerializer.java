@@ -50,7 +50,7 @@ public class MyRedisKeySerializer implements RedisSerializer<String> {
 	@Override
 	public byte[] serialize(String t) throws SerializationException {
 		String key = keyPrefix + KEY_SPLIT_CASE + t;
-		logger.info("key:{},getBytes:{}", key, key.getBytes(charset));
+		logger.info("key:{}", key);
 		return (key == null ? null : key.getBytes(charset));
 	}
 

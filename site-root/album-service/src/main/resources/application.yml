@@ -60,6 +60,8 @@ eureka:
   client:
     service-url: 
       defaultZone: http://127.0.0.1:8761/eureka/
-
-#业务配置
-redis.root: album-service
+ 
+ #自定义配置
+redis: 
+  accept:
+    white-list: pers.wl.site.model
