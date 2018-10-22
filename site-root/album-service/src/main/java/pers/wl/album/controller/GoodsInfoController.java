@@ -1,10 +1,13 @@
 package pers.wl.album.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import pers.wl.album.service.GoodsInfoService;
-import pers.wl.site.api.album.GoodsInfoApi;
+import pers.wl.site.api.album.GoodsInfoControllerApi;
+import pers.wl.site.model.album.GoodsInfoModel;
 
 /**
  * 产品信息
@@ -15,10 +18,18 @@ import pers.wl.site.api.album.GoodsInfoApi;
  *
  */
 @RestController
-public class GoodsInfoController implements GoodsInfoApi{
+public class GoodsInfoController implements GoodsInfoControllerApi{
 	
 	@Autowired
 	private GoodsInfoService goodsInfoService;
+
+	/** 
+	 * @see pers.wl.site.api.album.GoodsInfoControllerApi#getAll()
+	 */
+	@Override
+	public List<GoodsInfoModel> getAll() {
+		return goodsInfoService.getAll();
+	}
 	
 	
 }

@@ -15,55 +15,70 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 
 /**
  * The persistent class for the TB_GOODS_INFO database table.
  * 
  */
+@ApiModel("商品信息")
 @Entity
 @Table(name="TB_GOODS_INFO")
 @NamedQuery(name="GoodsInfoModel.findAll", query="SELECT t FROM GoodsInfoModel t")
 public class GoodsInfoModel implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="goods_id")
 	private int goodsId;
-
+	
+	@ApiModelProperty("创建时间")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="create_time")
 	private Date createTime;
-
+	
+	@ApiModelProperty("商品描述")
 	@Column(name="goods_desc")
 	private String goodsDesc;
-
+	
+	@ApiModelProperty("商品详情")
 	@Lob
 	@Column(name="goods_detail")
 	private String goodsDetail;
-
+	
+	@ApiModelProperty("商品主图")
 	@Column(name="goods_head_img")
 	private String goodsHeadImg;
-
+	
+	@ApiModelProperty("商品名称")
 	@Column(name="goods_name")
 	private String goodsName;
-
+	
+	@ApiModelProperty("商品价格")
 	@Column(name="goods_price")
 	private BigDecimal goodsPrice;
-
+	
+	@ApiModelProperty("商品货号")
 	@Column(name="goods_sn")
 	private String goodsSn;
-
+	
+	@ApiModelProperty("序号")
 	@Column(name="goods_sort")
 	private int goodsSort;
-
+	
+	@ApiModelProperty(value="商品状态",example="INIT:未发布;UP:上架;DOWN:下架")
 	@Column(name="goods_status")
 	private String goodsStatus;
-
+	
+	@ApiModelProperty("更新时间")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="update_time")
 	private Date updateTime;
-
+	
+	@ApiModelProperty("操作人ID")
 	@Column(name="user_id")
 	private int userId;
 

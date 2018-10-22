@@ -23,10 +23,10 @@ import pers.wl.site.model.UserModel;
 public interface TestControllerApi {
 	
 	@ApiOperation(value="获取用户",notes="描述:")
-	@GetMapping("/test/getuser")
+	@GetMapping("/getuser")
 	public UserModel getUser();
 	
-	@ApiOperation(value="sayHello",notes="描述:")
-	@GetMapping("/test/sayHello")
+	@ApiOperation(value="sayhello",notes="描述:")
+	@GetMapping("/sayhello")
 	public String sayHello();
 }
