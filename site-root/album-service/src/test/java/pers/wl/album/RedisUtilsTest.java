@@ -38,16 +38,7 @@ public class RedisUtilsTest {
 		redisUtils.putObjectCache("test", "测试测试");
 		redisUtils.putObjectCache("test1", "测试测试1");
 		redisUtils.putObjectCache("test2", "测试测试2");
-		GoodsInfoModel model = new GoodsInfoModel();
-		model.setGoodsId(1);
-		model.setGoodsName("测试什么鬼产品");
-		model.setCreateTime(new Date());
-		model.setGoodsSn("12133");
-		model.setGoodsHeadImg("adaffsdf.jpg");
-		model.setGoodsPrice(new BigDecimal("23"));
-		model.setGoodsStatus("INIT");
-		redisUtils.putObjectCache("test3", model);
-		System.out.println(redisUtils.getObjectCache("test3").toString());
+		System.out.println(redisUtils.getObjectCache("test").toString());
 	}
 
 	@Test
@@ -63,8 +54,13 @@ public class RedisUtilsTest {
 	}
 	
 	@Test
-	public void existsKey() {
+	public void existsKeyTest() {
 		Assert.assertTrue(
 				redisUtils.existsKey("getAllGoodsInfo::pers.wl.album.service.impl.GoodsInfoServiceImplgetAll"));
+	}
+	
+	@Test
+	public void renameKeyNxTest(){
+		Assert.assertTrue(redisUtils.renameKeyNx("test", "test-update"));
 	}
 }
