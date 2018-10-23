@@ -12,9 +12,20 @@
   		<!-- 内部工程依赖 starting -->
   		<dependency>
 	  		<groupId>pers.wl.site</groupId>
+			<artifactId>site-common</artifactId>
+			<version>${project.version}</version>
+  		</dependency>
+  		<dependency>
+	  		<groupId>pers.wl.site</groupId>
 			<artifactId>site-cache</artifactId>
 			<version>${project.version}</version>
-	  	</dependency>
+			<exclusions>
+				<exclusion>
+					<groupId>com.alibaba</groupId>
+					<artifactId>fastjson</artifactId>
+				</exclusion>
+			</exclusions>
+  		</dependency>
 	  	<dependency>
 	  		<groupId>pers.wl.site</groupId>
 			<artifactId>site-service-api</artifactId>

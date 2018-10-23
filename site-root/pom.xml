@@ -29,6 +29,7 @@
     <module>site-web</module>
     <module>site-cache</module>
     <module>album-service</module>
+    <module>site-common</module>
   </modules>
   
   <dependencyManagement>

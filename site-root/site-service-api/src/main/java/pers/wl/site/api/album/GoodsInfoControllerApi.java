@@ -18,11 +18,11 @@ import pers.wl.site.model.album.GoodsInfoModel;
  * @version v1.0
  *
  */
-@Api(tags = "产品信息api")
+@Api(tags = "商品信息api")
 @RequestMapping("/goodsinfo-api")
 public interface GoodsInfoControllerApi {
-
-	@ApiOperation(value = "获取产品列表", notes = "说明：获取产品列表", response = GoodsInfoModel.class)
+	
+	@ApiOperation(value = "获取产品列表", notes = "说明：获取产品列表")
 	@GetMapping("/getall")
 	public List<GoodsInfoModel> getAll();
 }
