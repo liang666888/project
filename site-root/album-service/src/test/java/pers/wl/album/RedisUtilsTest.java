@@ -3,9 +3,6 @@
  */
 package pers.wl.album;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
 
+import pers.wl.album.model.GoodsInfoModel;
 import pers.wl.cache.redis.RedisUtils;
-import pers.wl.site.model.album.GoodsInfoModel;
 
 /**
  * 描述说明

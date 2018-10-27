@@ -50,7 +50,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 	 * 缓存对象白名单，只有在该指定包下的类能使用
 	 * 自定义序列化方式进行正常序列化与反序列化
 	 */
-	@Value("${redis.accept.white-list}")
+	@Value("${redis.accept.white-list:}")
 	private String redisAcceptList;
 	
 	/**

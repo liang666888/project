@@ -40,12 +40,16 @@ spring:
     #useGlobalDataSourceStat: true
   jpa: 
     hibernate:
-      naming:
+      naming: 
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: true
-  redis:
+    open-in-view: true
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+  redis: 
     host: 116.62.117.180
     port: 6379
     password: testdb
@@ -61,7 +65,7 @@ eureka:
     service-url: 
       defaultZone: http://127.0.0.1:8761/eureka/
  
- #自定义配置
+ #自定义配置(redis fastjson序列化包路径)
 redis: 
-  accept:
-    white-list: pers.wl.site.model
+  accept: 
+    white-list: pers.wl.album

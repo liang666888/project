@@ -5,8 +5,8 @@
     <artifactId>site-root</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>album-service</artifactId>
-  <name>album-service</name>
+  <artifactId>album-admin-service</artifactId>
+  <name>album-admin-service</name>
   
   <dependencies>
   		<!-- 内部工程依赖 starting -->
@@ -28,18 +28,7 @@
   		</dependency>
 	  	<!-- 内部工程依赖 ending -->
 	  	
-	  	<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-	 	</dependency>
-	 	
-	 	<!-- swagger -->
-		<dependency>
-			<groupId>com.spring4all</groupId>
-			<artifactId>swagger-spring-boot-starter</artifactId>
-		</dependency>
-	  	
-  		<!-- 数据库 starting -->
+	  	<!-- 数据库 starting -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -50,16 +39,19 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
 		<!-- 数据库 ending -->
 		
 		<!-- eureka -->
 		<dependency>
 	    	<groupId>org.springframework.cloud</groupId>
 	    	<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		
+		<!-- shiro-spring -->
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-spring</artifactId>
+		    <version>${shiro-spring.version}</version>
 		</dependency>
 		
 		<dependency>

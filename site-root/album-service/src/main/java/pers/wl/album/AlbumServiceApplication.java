@@ -19,7 +19,7 @@ import com.spring4all.swagger.EnableSwagger2Doc;
  * @since JDK 1.8
  */
 @EnableSwagger2Doc
-@EntityScan("pers.wl.site.model")//@EntityScan("entity对应的包路径")
+@EntityScan("pers.wl.album.model")//@EntityScan("entity对应的包路径")
 //@EnableJpaRepositories(basePackages={"pers.wl.album.repository"}) //@EnableJpaRepositories(basePackages={"dao层对应的包路径"})
 @ComponentScan(basePackages = {"pers.wl.album","pers.wl.cache"})
 @SpringBootApplication

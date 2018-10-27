@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import pers.wl.site.model.album.GoodsInfoModel;
+import pers.wl.album.model.GoodsInfoModel;
 
 public interface GoodsInfoService {
 	public GoodsInfoModel add(GoodsInfoModel goodsInfoModel);

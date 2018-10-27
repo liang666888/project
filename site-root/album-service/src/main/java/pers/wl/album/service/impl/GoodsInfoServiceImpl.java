@@ -20,9 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 
+import pers.wl.album.model.GoodsInfoModel;
 import pers.wl.album.repository.GoodsInfoRepository;
 import pers.wl.album.service.GoodsInfoService;
-import pers.wl.site.model.album.GoodsInfoModel;
 
 /**
  * 

@@ -13,8 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
 
+import pers.wl.album.model.GoodsInfoModel;
 import pers.wl.cache.redis.RedisUtils;
-import pers.wl.site.model.album.GoodsInfoModel;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class GoodsInfoServiceTest {
 	@Test
 	public void addTest() {
 		GoodsInfoModel model = new GoodsInfoModel();
-		model.setGoodsName("再来一个");
+		model.setGoodsName("再来一个2");
 		model.setCreateTime(new Date());
 		model.setGoodsSn("123456");
 		model.setGoodsHeadImg("test.jpg");
@@ -58,15 +58,15 @@ public class GoodsInfoServiceTest {
 	
 	@Test
 	public void getTest() {
-		GoodsInfoModel model = goodsInfoService.get(4);
+		GoodsInfoModel model = goodsInfoService.get(6);
 		Assert.assertNotNull(model);
 		System.out.println(JSON.toJSONString(model));
 	}
 	
 	@Test
 	public void updateTest() {
-		GoodsInfoModel model = goodsInfoService.get(4);
-		model.setGoodsName("修改名称-aaa");
+		GoodsInfoModel model = goodsInfoService.get(6);
+		model.setGoodsName("修改名称-555");
 		GoodsInfoModel updateModel = goodsInfoService.update(model);
 		Assert.assertNotNull(updateModel);
 	}
