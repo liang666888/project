@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 import com.spring4all.swagger.EnableSwagger2Doc;
 
@@ -22,6 +23,7 @@ import com.spring4all.swagger.EnableSwagger2Doc;
 @EntityScan("pers.wl.album.model")//@EntityScan("entity对应的包路径")
 //@EnableJpaRepositories(basePackages={"pers.wl.album.repository"}) //@EnableJpaRepositories(basePackages={"dao层对应的包路径"})
 @ComponentScan(basePackages = {"pers.wl.album","pers.wl.cache"})
+@EnableRedisHttpSession	//开启redis集中式session管理，所有的session都存放到redis中
 @SpringBootApplication
 public class AlbumServiceApplication {
 
