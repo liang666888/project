@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiModelProperty;
  * 
  */
 @ApiModel("商品信息")
-//@Proxy(lazy=false)
+@Proxy(lazy=false)
 @Entity
 @Table(name="TB_GOODS_INFO")
 @NamedQuery(name="GoodsInfoModel.findAll", query="SELECT t FROM GoodsInfoModel t")

@@ -1,7 +1,5 @@
 package pers.wl.album.controller;
 
-import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +35,7 @@ public class GoodsInfoController{
 		return goodsInfoService.getAll();
 	}
 	
-	@ApiOperation(value = "获取产品", notes = "说明：根据商品ID获取商品")
+	@ApiOperation(value = "获取商品信息", notes = "说明：根据商品ID获取商品")
 	@GetMapping("/get/{goodsId}")
 	public GoodsInfoModel get(@PathVariable(name="goodsId")Integer goodsId) {
 		return goodsInfoService.get(goodsId);

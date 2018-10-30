@@ -4,7 +4,7 @@
     <!-- 项目的appid -->
     <property name="APP_ID" value="album-service"/>
     <!-- 日志路径 --> 
-    <property name="LOG_PATH" value="E:/logbackLog"/>
+    <property name="LOG_PATH" value="/usr/log/logbackLog"/>
     
     <!-- 控制台打印日志的相关配置 --> 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
