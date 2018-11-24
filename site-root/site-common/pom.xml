@@ -8,10 +8,15 @@
   <artifactId>site-common</artifactId>
   <name>site-common</name>
   <dependencies>
-  	<!-- fastjson -->
-	<dependency>
-	    <groupId>com.alibaba</groupId>
-	    <artifactId>fastjson</artifactId>
-	</dependency>
+	  	<!-- fastjson -->
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		</dependency>
+		<!-- commons-lang3 -->
+		<dependency>
+		   <groupId>org.apache.commons</groupId>
+		   <artifactId>commons-lang3</artifactId>
+		</dependency>
   </dependencies>
 </project>

@@ -62,11 +62,16 @@
 	    	<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		
-		<!-- spring session -->
+		<!-- okhttp -->
 		<dependency>
+		    <groupId>com.squareup.okhttp3</groupId>
+		    <artifactId>okhttp</artifactId>
+		</dependency>
+		<!-- spring session -->
+		<!-- <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session</artifactId>
-        </dependency>
+        </dependency> -->
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

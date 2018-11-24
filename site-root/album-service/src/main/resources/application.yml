@@ -64,8 +64,3 @@ eureka:
   client:
     service-url: 
       defaultZone: http://127.0.0.1:8761/eureka/
- 
- #自定义配置(redis fastjson序列化包路径)
-redis: 
-  accept: 
-    white-list: pers.wl.album
