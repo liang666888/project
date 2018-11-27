@@ -14,6 +14,8 @@ public enum RetCodeEnum {
 	SUCCESS("0000", "请求处理成功"),
 	REQUEST_ILLEGAL("0001", "请求报文非法"),
 	PARAM_ILLEGAL("0002", "参数校验未通过"),
+	IMG_TYPE_ILLEGAL("0003", "文件类型不允许"),
+	IMG_SIZE_EMPTY("0004", "文件大小不能为空"),
 	
 	
 	// 系统异常8000~9999
