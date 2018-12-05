@@ -223,7 +223,10 @@ public class RedisUtils {
 	 */
 	public <T> T getObjectCache(String key, Class<T> clazz) {
 		Object value = valueOperator.get(key);
-		return JSON.parseObject(JSON.toJSONString(value), clazz);
+		if(value != null) {
+			return JSON.parseObject(JSON.toJSONString(value), clazz);
+		}
+		return null;
 	}
 	
 	/**
