@@ -15,7 +15,6 @@ import pers.wl.album.controller.wechat.dto.LoginTokenDto;
 import pers.wl.album.service.LoginService;
 import pers.wl.common.utils.result.ApiResult;
 
-
 /**
  * 描述说明 微信服务接口
  * 
@@ -24,11 +23,11 @@ import pers.wl.common.utils.result.ApiResult;
  * @Date 2018年11月24日 上午11:44:16
  * @since JDK 1.8
  */
-@Api(tags="微信相关接口")
+@Api(tags = "微信相关接口")
 @RestController
 @RequestMapping("/wechat")
 public class WechatController {
-	
+
 	@Autowired
 	private LoginService loginService;
 

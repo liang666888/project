@@ -5,7 +5,7 @@ package pers.wl.album.util.wechat;
 
 import java.util.UUID;
 
-import pers.wl.album.common.BaseConstants;
+import pers.wl.album.common.constants.BaseConstants;
 
 /**
  * 描述说明

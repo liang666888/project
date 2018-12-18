@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 
 import pers.wl.album.controller.wechat.dto.Code2SessionDto;
 import pers.wl.album.controller.wechat.dto.LoginTokenDto;
+import pers.wl.album.model.TbUserModel;
 import pers.wl.album.util.AssertResultUtil;
 import pers.wl.album.util.OkHttpUtil;
 import pers.wl.album.util.wechat.WechatAppTokenUtil;
@@ -59,6 +60,9 @@ public class LoginService {
 	@Autowired
 	private RedisUtils redisUtils;
 
+	@Autowired
+	private UserService userService;
+
 	/**
 	 * 微信小程序登录
 	 * 
@@ -72,11 +76,43 @@ public class LoginService {
 		Code2SessionDto code2SessionDto = JSON.parseObject(resJson, Code2SessionDto.class);
 		AssertResultUtil.equals(code2SessionDto.getErrcode() + "", "0",
 				new BizException(code2SessionDto.getErrcode() + "", code2SessionDto.getErrmsg()));
-		// 缓存openid、session_key
-		String loginToken = WechatAppTokenUtil.generateLoginToken();
-		redisUtils.putObjectCache(loginToken, code2SessionDto, Long.valueOf(tokenExpire));
+		// 获取用户
+		TbUserModel tbUserModel = this.getUser(code2SessionDto);
+		// 缓存登录态
+		String loginToken = this.cacheLogin(tbUserModel);
 		// 返回loginToken
 		return ApiResultUtil.success(new LoginTokenDto(loginToken));
+	}
+
+	/**
+	 * 获取用户
+	 * 
+	 * @param code2SessionDto
+	 * @return
+	 */
+	private TbUserModel getUser(Code2SessionDto code2SessionDto) {
+		TbUserModel record = userService.findByOpenid(code2SessionDto.getOpenid());
+		if (record == null) {
+			// 新增用户
+			TbUserModel tbUserModel = new TbUserModel();
+			tbUserModel.setOpenid(code2SessionDto.getOpenid());
+			tbUserModel.setUnionid(code2SessionDto.getUnionid());
+			record = userService.add(tbUserModel);
+		}
+		return record;
+	}
+
+	/**
+	 * 缓存登录态
+	 * 
+	 * @param tbUserModel
+	 * @return
+	 */
+	private String cacheLogin(TbUserModel tbUserModel) {
+		// 缓存openid、session_key
+		String loginToken = WechatAppTokenUtil.generateLoginToken();
+		redisUtils.putObjectCache(loginToken, tbUserModel, Long.valueOf(tokenExpire));
+		return loginToken;
 	}
 
 	/**

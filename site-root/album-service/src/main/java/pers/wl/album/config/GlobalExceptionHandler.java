@@ -51,7 +51,6 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(BizException.class)
 	@ResponseBody
 	public ApiResult<Object> bizExceptionHandler(HttpServletRequest request, BizException bizException) {
-//		LogUtil.warn(logger, bizException.toString()); // 业务异常日志，打印级别warn
 		return handleErrorInfo(request, bizException.getCode(), bizException.getMessage(), bizException);
 	}
 
@@ -64,12 +63,11 @@ public class GlobalExceptionHandler {
 	@ResponseBody
 	public ApiResult<Object> methodArgumentNotValidExceptionHandler(HttpServletRequest request, MethodArgumentNotValidException validException) {
 		BindingResult bindingResult = validException.getBindingResult();
-		String errorMesssage = RetCodeEnum.PARAM_ILLEGAL.getDesc()+":";
+		String errorMesssage = "";
 		for (FieldError fieldError : bindingResult.getFieldErrors()) {
 			errorMesssage += fieldError.getDefaultMessage() + ",";
 		}
 		errorMesssage = errorMesssage.substring(0, errorMesssage.length()-1);
-//		LogUtil.info(logger, errorMesssage); // 请求参数校验异常日志，打印级别info
 		return handleErrorInfo(request, RetCodeEnum.PARAM_ILLEGAL.getCode(), errorMesssage, validException);
 	}
 

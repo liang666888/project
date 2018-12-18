@@ -1,7 +1,7 @@
 /**
  * Copyright © 2017-2018 WL.All Rights Reserved.
  */
-package pers.wl.album.common;
+package pers.wl.album.common.constants;
 
 /**
  * 描述说明 系统基础常量类

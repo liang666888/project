@@ -20,7 +20,8 @@ public enum RetCodeEnum {
 	
 	// 系统异常8000~9999
 	SYSTEM_TIMEOUT("8000", "服务调用超时"),
-	SYSTEM_ERROR("8001", "系统错误");
+	SYSTEM_ERROR("8001", "系统错误"),
+	DUPLICATE_KEY_ERROR("8002","唯一性约束冲突");
 
 	private final String code;
 
