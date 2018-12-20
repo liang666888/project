@@ -21,6 +21,9 @@ public enum ServiceOperEnum {
 	/** 根据openid查找用户 */
 	FIND_USER_BY_OPENID("FIND_USER_BY_OPENID", "根据openid查找用户"),
 
+	/** 微信小程序登录 */
+	WECHAT_APP_LOGIN("WECHAT_APP_LOGIN", "微信小程序登录"),
+
 	/** 未知操作 */
 	UNKNOW("UNKNOW", "未知操作");
 

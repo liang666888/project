@@ -6,13 +6,16 @@ package pers.wl.album.service;
 import java.text.MessageFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 
+import pers.wl.album.common.annotation.ServiceOper;
+import pers.wl.album.common.constants.AppConfigure;
+import pers.wl.album.common.enums.ServiceOperEnum;
 import pers.wl.album.controller.wechat.dto.Code2SessionDto;
 import pers.wl.album.controller.wechat.dto.LoginTokenDto;
+import pers.wl.album.controller.wechat.dto.LoginUser;
 import pers.wl.album.model.TbUserModel;
 import pers.wl.album.util.AssertResultUtil;
 import pers.wl.album.util.OkHttpUtil;
@@ -33,29 +36,8 @@ import pers.wl.common.utils.result.ApiResultUtil;
 @Service
 public class LoginService {
 
-	/**
-	 * 微信小程序用户登录态信息获取URL
-	 */
-	@Value("${wechat.code2Session.url:}")
-	private String code2SessionUrl;
-
-	/**
-	 * 小程序appid
-	 */
-	@Value("${wechat.appid}")
-	private String appid;
-
-	/**
-	 * 小程序secret
-	 */
-	@Value("${wechat.secret}")
-	private String secret;
-
-	/**
-	 * loginToken过期时间
-	 */
-	@Value("${wechat.token.expire:1200}")
-	private String tokenExpire;
+	@Autowired
+	private AppConfigure appConfigure;
 
 	@Autowired
 	private RedisUtils redisUtils;
@@ -69,9 +51,11 @@ public class LoginService {
 	 * @param code
 	 * @return
 	 */
+	@ServiceOper(oper=ServiceOperEnum.WECHAT_APP_LOGIN)
 	public ApiResult<LoginTokenDto> wechatAppLogin(String code) {
 		// 获取小程序用户openid、session_key
-		String url = MessageFormat.format(code2SessionUrl, appid, secret, code);
+		String url = MessageFormat.format(appConfigure.getCode2SessionUrl(), appConfigure.getAppid(),
+				appConfigure.getSecret(), code);
 		String resJson = OkHttpUtil.get(url, null);
 		Code2SessionDto code2SessionDto = JSON.parseObject(resJson, Code2SessionDto.class);
 		AssertResultUtil.equals(code2SessionDto.getErrcode() + "", "0",
@@ -79,7 +63,7 @@ public class LoginService {
 		// 获取用户
 		TbUserModel tbUserModel = this.getUser(code2SessionDto);
 		// 缓存登录态
-		String loginToken = this.cacheLogin(tbUserModel);
+		String loginToken = this.cacheLogin(tbUserModel,code2SessionDto.getSession_key());
 		// 返回loginToken
 		return ApiResultUtil.success(new LoginTokenDto(loginToken));
 	}
@@ -88,12 +72,12 @@ public class LoginService {
 	 * 获取用户
 	 * 
 	 * @param code2SessionDto
-	 * @return
+	 * @return 用户信息
 	 */
 	private TbUserModel getUser(Code2SessionDto code2SessionDto) {
 		TbUserModel record = userService.findByOpenid(code2SessionDto.getOpenid());
 		if (record == null) {
-			// 新增用户
+			// 用户不存在则新增用户
 			TbUserModel tbUserModel = new TbUserModel();
 			tbUserModel.setOpenid(code2SessionDto.getOpenid());
 			tbUserModel.setUnionid(code2SessionDto.getUnionid());
@@ -106,12 +90,19 @@ public class LoginService {
 	 * 缓存登录态
 	 * 
 	 * @param tbUserModel
+	 * @param sessionKey
 	 * @return
 	 */
-	private String cacheLogin(TbUserModel tbUserModel) {
+	private String cacheLogin(TbUserModel tbUserModel,String sessionKey) {
 		// 缓存openid、session_key
-		String loginToken = WechatAppTokenUtil.generateLoginToken();
-		redisUtils.putObjectCache(loginToken, tbUserModel, Long.valueOf(tokenExpire));
+		String loginToken = WechatAppTokenUtil.generateLoginToken(tbUserModel.getOpenid());
+		LoginUser loginUser = new LoginUser();
+		loginUser.setUserId(tbUserModel.getUserId());
+		loginUser.setOpenid(tbUserModel.getOpenid());
+		loginUser.setUnionid(tbUserModel.getUnionid());
+		loginUser.setSession_key(sessionKey);
+		loginUser.setUsername(tbUserModel.getUsername());
+		redisUtils.putObjectCache(loginToken, loginUser, Long.valueOf(appConfigure.getTokenExpireSecond()));
 		return loginToken;
 	}
 
@@ -119,9 +110,10 @@ public class LoginService {
 	 * 校验loginToken有效性
 	 * 
 	 * @param loginToken
+	 * @return
 	 */
-	public Code2SessionDto checkWechatAppLoginToken(String loginToken) {
-		Code2SessionDto sessionDto = redisUtils.getObjectCache(loginToken, Code2SessionDto.class);
-		return sessionDto;
+	public LoginUser checkWechatAppLoginToken(String loginToken) {
+		LoginUser loginUser = redisUtils.getObjectCache(loginToken, LoginUser.class);
+		return loginUser;
 	}
 }

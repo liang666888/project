@@ -5,8 +5,6 @@ package pers.wl.album.util.wechat;
 
 import java.util.UUID;
 
-import pers.wl.album.common.constants.BaseConstants;
-
 /**
  * 描述说明
  * 
@@ -19,11 +17,11 @@ public class WechatAppTokenUtil {
 
 	/**
 	 * 生成小程序登录token(作为登录信息redis缓存key)
-	 * 
+	 * openid+UUID
 	 * @param openid
 	 * @return loginToken
 	 */
-	public static String generateLoginToken() {
-		return BaseConstants.WECHAT_APP_LOGIN_TOKEN_CACHE + UUID.randomUUID().toString();
+	public static String generateLoginToken(String openid) {
+		return openid+UUID.randomUUID().toString();
 	}
 }

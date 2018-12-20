@@ -44,7 +44,7 @@ public class WebLogAspect {
 		startTime.set(System.currentTimeMillis());
 		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
-		LogUtil.info(logger, "接收到web请求", "URL:" + request.getRequestURL().toString(),
+		LogUtil.info(logger, "处理web请求", "URL:" + request.getRequestURL().toString(),
 				"HTTP_METHOD:" + request.getMethod(), "IP:" + WebUtil.getIpAddress(request));
 		String queryString = request.getQueryString();
 		// 经过验证，这里@RequestBody注解的切面会先生效，获取到的args为已经做过json转化的请求参数对象

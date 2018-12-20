@@ -14,14 +14,14 @@ import java.io.Serializable;
  * @since JDK 1.8
  */
 public class LoginUser implements Serializable {
-	
+
 	/** */
 	private static final long serialVersionUID = 5832745846089699608L;
-	
+
 	/**
 	 * 用户ID
 	 */
-	private String userId;
+	private Integer userId;
 	/**
 	 * 用户唯一标识
 	 */
@@ -35,11 +35,13 @@ public class LoginUser implements Serializable {
 	 */
 	private String unionid;
 
-	public String getUserId() {
+	private String username;
+
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -65,6 +67,14 @@ public class LoginUser implements Serializable {
 
 	public void setUnionid(String unionid) {
 		this.unionid = unionid;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

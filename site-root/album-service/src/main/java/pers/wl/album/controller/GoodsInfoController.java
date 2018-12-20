@@ -12,6 +12,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import pers.wl.album.model.GoodsInfoModel;
 import pers.wl.album.service.GoodsInfoService;
+import pers.wl.common.utils.result.ApiResult;
+import pers.wl.common.utils.result.ApiResultUtil;
 
 /**
  * 产品信息
@@ -31,14 +33,14 @@ public class GoodsInfoController{
 
 	@ApiOperation(value = "获取商品列表", notes = "说明：获取商品列表")
 	@GetMapping("/getall")
-	public List<GoodsInfoModel> getAll() {
-		return goodsInfoService.getAll();
+	public ApiResult<List<GoodsInfoModel>> getAll() {
+		return ApiResultUtil.success(goodsInfoService.getAll());
 	}
 	
 	@ApiOperation(value = "获取商品信息", notes = "说明：根据商品ID获取商品")
 	@GetMapping("/get/{goodsId}")
-	public GoodsInfoModel get(@PathVariable(name="goodsId")Integer goodsId) {
-		return goodsInfoService.get(goodsId);
+	public ApiResult<GoodsInfoModel> get(@PathVariable(name="goodsId")Integer goodsId) {
+		return ApiResultUtil.success(goodsInfoService.get(goodsId));
 	}
 	
 	

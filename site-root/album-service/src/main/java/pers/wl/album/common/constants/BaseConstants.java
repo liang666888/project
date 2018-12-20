@@ -13,7 +13,7 @@ package pers.wl.album.common.constants;
  */
 public class BaseConstants {
 	/**
-	 * 微信小程序loginToken缓存前缀
+	 * loginToken键值
 	 */
-	public static final String WECHAT_APP_LOGIN_TOKEN_CACHE ="WECHAT_APP_LOGIN_TOKEN_CACHE_";
+	public static final String WECHAT_APP_LOGIN_TOKEN ="token";
 }

@@ -24,9 +24,9 @@ import com.spring4all.swagger.EnableSwagger2Doc;
 @ComponentScan(basePackages = {"pers.wl.album","pers.wl.cache"})
 //@EnableRedisHttpSession	//开启redis集中式session管理，所有的session都存放到redis中
 @SpringBootApplication
-public class AlbumServiceApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AlbumServiceApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 }

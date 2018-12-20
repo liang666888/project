@@ -5,7 +5,6 @@ package pers.wl.album.controller.wechat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,8 +37,8 @@ public class WechatController {
 	 * @return
 	 */
 	@ApiOperation(value = "微信小程序登录", notes = "说明：微信小程序登录")
-	@GetMapping("/login/{code}")
-	public ApiResult<LoginTokenDto> login(@PathVariable("code") String code) {
+	@GetMapping("/login")
+	public ApiResult<LoginTokenDto> login(String code) {
 		return loginService.wechatAppLogin(code);
 	}
 }
