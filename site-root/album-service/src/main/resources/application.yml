@@ -6,6 +6,12 @@ server:
 spring:
   application:
     name: album-service
+  mvc:
+    static-path-pattern: /static/**
+  # 修改默认的静态寻址资源目录 多个使用逗号分隔
+  resources:
+    static-locations:
+    - classpath:/static/
   datasource:
     url: jdbc:mysql://116.62.117.180:28741/yinhua?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
     username: Test0720
@@ -64,3 +70,7 @@ eureka:
   client:
     service-url: 
       defaultZone: http://127.0.0.1:8761/eureka/
+      
+# 静态文件请求匹配方式
+
+

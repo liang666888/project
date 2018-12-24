@@ -5,6 +5,7 @@ package pers.wl.album.service;
 
 import java.text.MessageFormat;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 
 import pers.wl.album.common.annotation.ServiceOper;
 import pers.wl.album.common.constants.AppConfigure;
+import pers.wl.album.common.constants.BaseConstants;
 import pers.wl.album.common.enums.ServiceOperEnum;
 import pers.wl.album.controller.wechat.dto.Code2SessionDto;
 import pers.wl.album.controller.wechat.dto.LoginTokenDto;
@@ -19,6 +21,7 @@ import pers.wl.album.controller.wechat.dto.LoginUser;
 import pers.wl.album.model.TbUserModel;
 import pers.wl.album.util.AssertResultUtil;
 import pers.wl.album.util.OkHttpUtil;
+import pers.wl.album.util.WebUtil;
 import pers.wl.album.util.wechat.WechatAppTokenUtil;
 import pers.wl.cache.redis.RedisUtils;
 import pers.wl.common.enums.exception.BizException;
@@ -51,7 +54,7 @@ public class LoginService {
 	 * @param code
 	 * @return
 	 */
-	@ServiceOper(oper=ServiceOperEnum.WECHAT_APP_LOGIN)
+	@ServiceOper(oper = ServiceOperEnum.WECHAT_APP_LOGIN)
 	public ApiResult<LoginTokenDto> wechatAppLogin(String code) {
 		// 获取小程序用户openid、session_key
 		String url = MessageFormat.format(appConfigure.getCode2SessionUrl(), appConfigure.getAppid(),
@@ -63,7 +66,7 @@ public class LoginService {
 		// 获取用户
 		TbUserModel tbUserModel = this.getUser(code2SessionDto);
 		// 缓存登录态
-		String loginToken = this.cacheLogin(tbUserModel,code2SessionDto.getSession_key());
+		String loginToken = this.cacheLogin(tbUserModel, code2SessionDto.getSession_key());
 		// 返回loginToken
 		return ApiResultUtil.success(new LoginTokenDto(loginToken));
 	}
@@ -87,15 +90,19 @@ public class LoginService {
 	}
 
 	/**
-	 * 缓存登录态
+	 * 缓存登录用户信息
 	 * 
 	 * @param tbUserModel
 	 * @param sessionKey
 	 * @return
 	 */
-	private String cacheLogin(TbUserModel tbUserModel,String sessionKey) {
-		// 缓存openid、session_key
-		String loginToken = WechatAppTokenUtil.generateLoginToken(tbUserModel.getOpenid());
+	private String cacheLogin(TbUserModel tbUserModel, String sessionKey) {
+		// 先尝试从请求头中获取token
+		String loginToken = WebUtil.getHttpServletRequest().getHeader(BaseConstants.WECHAT_APP_LOGIN_TOKEN);
+		if (!(StringUtils.isNotBlank(loginToken) && redisUtils.existsKey(loginToken)
+				&& loginToken.startsWith(tbUserModel.getOpenid()))) {
+			loginToken = WechatAppTokenUtil.generateLoginToken(tbUserModel.getOpenid());
+		}
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUserId(tbUserModel.getUserId());
 		loginUser.setOpenid(tbUserModel.getOpenid());
