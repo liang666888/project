@@ -1,6 +1,6 @@
 #服务端口号
 server:
-  port: 80
+  port: 8080
   servlet:
     context-path: /album-service
 spring:
