@@ -56,17 +56,23 @@ public class LoginService {
 	 */
 	@ServiceOper(oper = ServiceOperEnum.WECHAT_APP_LOGIN)
 	public ApiResult<LoginTokenDto> wechatAppLogin(String code) {
-		// 获取小程序用户openid、session_key
-		String url = MessageFormat.format(appConfigure.getCode2SessionUrl(), appConfigure.getAppid(),
-				appConfigure.getSecret(), code);
-		String resJson = OkHttpUtil.get(url, null);
-		Code2SessionDto code2SessionDto = JSON.parseObject(resJson, Code2SessionDto.class);
-		AssertResultUtil.equals(code2SessionDto.getErrcode() + "", "0",
-				new BizException(code2SessionDto.getErrcode() + "", code2SessionDto.getErrmsg()));
-		// 获取用户
-		TbUserModel tbUserModel = this.getUser(code2SessionDto);
-		// 缓存登录态
-		String loginToken = this.cacheLogin(tbUserModel, code2SessionDto.getSession_key());
+		// 先尝试从请求头中获取token
+		String loginToken = WebUtil.getHttpServletRequest().getHeader(BaseConstants.WECHAT_APP_LOGIN_TOKEN);
+		if (!(StringUtils.isNotBlank(loginToken) && redisUtils.existsKey(loginToken))) {
+			// 获取小程序用户openid、session_key
+			String url = MessageFormat.format(appConfigure.getCode2SessionUrl(), appConfigure.getAppid(),
+					appConfigure.getSecret(), code);
+			String resJson = OkHttpUtil.get(url, null);
+			Code2SessionDto code2SessionDto = JSON.parseObject(resJson, Code2SessionDto.class);
+			AssertResultUtil.equals(code2SessionDto.getErrcode() + "", "0",
+					new BizException(code2SessionDto.getErrcode() + "", code2SessionDto.getErrmsg()));
+			// 获取用户
+			TbUserModel tbUserModel = this.getUser(code2SessionDto);
+			// 缓存登录态
+			loginToken = this.cacheLogin(tbUserModel, code2SessionDto.getSession_key());
+		} else {
+
+		}
 		// 返回loginToken
 		return ApiResultUtil.success(new LoginTokenDto(loginToken));
 	}
@@ -97,12 +103,7 @@ public class LoginService {
 	 * @return
 	 */
 	private String cacheLogin(TbUserModel tbUserModel, String sessionKey) {
-		// 先尝试从请求头中获取token
-		String loginToken = WebUtil.getHttpServletRequest().getHeader(BaseConstants.WECHAT_APP_LOGIN_TOKEN);
-		if (!(StringUtils.isNotBlank(loginToken) && redisUtils.existsKey(loginToken)
-				&& loginToken.startsWith(tbUserModel.getOpenid()))) {
-			loginToken = WechatAppTokenUtil.generateLoginToken(tbUserModel.getOpenid());
-		}
+		String loginToken = WechatAppTokenUtil.generateLoginToken(tbUserModel.getOpenid());
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUserId(tbUserModel.getUserId());
 		loginUser.setOpenid(tbUserModel.getOpenid());
